@@ -14,7 +14,7 @@ $sqlResourceGroup = "superenvironment-live"
 $sqlAdmin = "sql_administrator"
 $sqlPassword = Read-Host -AsSecureString "Enter SQL administrator password"
 
-# Get databases (excluding master)
+# Get databases 
 $databases = Get-AzSqlDatabase -ServerName $sqlServerName -ResourceGroupName $sqlResourceGroup | Where-Object { $_.DatabaseName -ne "master" }
 
 # Timestamped folder for BACPACs
@@ -24,7 +24,7 @@ $timestamp = (Get-Date).ToString("yyyy-MM-dd")
 foreach ($db in $databases) {
     $dbName = $db.DatabaseName
     $bacpacName = "$dbName.bacpac"
-    $storageUri = "https://$storageAccount.blob.core.windows.net/$storageContainer/live/$timestamp/$bacpacName"
+    $storageUri = "https://$storageAccount.blob.core.windows.net/$storageContainer/live/$timestamp/$bacpacName" #I put Live in the path to distiguish between environments.
 
     Write-Host "Exporting $dbName to $storageUri..."
 
