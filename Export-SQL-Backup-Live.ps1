@@ -15,8 +15,9 @@ $sqlAdmin = "sql_administrator"
 $sqlPassword = Read-Host -AsSecureString "Enter SQL administrator password"
 
 # Get databases 
-$databases = Get-AzSqlDatabase -ServerName $sqlServerName -ResourceGroupName $sqlResourceGroup | Where-Object { $_.DatabaseName -ne "master" }
-
+$databases = Get-AzSqlDatabase -ServerName $serverName -ResourceGroupName $sqlRg | Where-Object {
+    $_.DatabaseName -ne "master" -and $_.Status -eq "Online"
+}
 # Timestamped folder for BACPACs
 $timestamp = (Get-Date).ToString("yyyy-MM-dd")
 
