@@ -35,10 +35,10 @@ To **distinguish between environments**, a folder prefix is used in the `Storage
 ```
 aws/
 ├── live/
-│   └── 2025-05-21T19-00/
+│   └── 2025-xx-xx/
 │       └── production_db.bacpac
 └── test/
-    └── 2025-05-21T19-00/
+    └── 2025-xx-xx/
         └── test_db.bacpac
 ```
 
