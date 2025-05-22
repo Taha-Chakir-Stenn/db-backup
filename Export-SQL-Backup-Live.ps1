@@ -6,7 +6,7 @@ $storageAccount = "decommissioned0live"
 $storageContainer = "aws"
 $storageResourceGroup = "Decommissioned-RG"
 $storageKey = (Get-AzStorageAccountKey -ResourceGroupName $storageResourceGroup -Name $storageAccount)[0].Value
-
+$subFolder = "live" # Subfolder in the blob storage
 # Switch to SQL server's subscription ---
 Set-AzContext -SubscriptionId "c3885f45-6172-4386-a8a3-8bcc83a96b8e"
 $sqlServerName = "superenvironment0live"
@@ -15,9 +15,8 @@ $sqlAdmin = "sql_administrator"
 $sqlPassword = Read-Host -AsSecureString "Enter SQL administrator password"
 
 # Get databases 
-$databases = Get-AzSqlDatabase -ServerName $serverName -ResourceGroupName $sqlRg | Where-Object {
-    $_.DatabaseName -ne "master" -and $_.Status -eq "Online"
-}
+$databases = Get-AzSqlDatabase -ServerName $sqlServerName -ResourceGroupName $sqlResourceGroup | Where-Object { $_.DatabaseName -ne "master" }
+
 # Timestamped folder for BACPACs
 $timestamp = (Get-Date).ToString("yyyy-MM-dd")
 
@@ -25,7 +24,7 @@ $timestamp = (Get-Date).ToString("yyyy-MM-dd")
 foreach ($db in $databases) {
     $dbName = $db.DatabaseName
     $bacpacName = "$dbName.bacpac"
-    $storageUri = "https://$storageAccount.blob.core.windows.net/$storageContainer/live/$timestamp/$bacpacName" #I put Live in the path to distiguish between environments.
+    $storageUri = "https://$storageAccount.blob.core.windows.net/$storageContainer/$subFolder/$timestamp/$bacpacName" #I put Live in the path to distiguish between environments.
 
     Write-Host "Exporting $dbName to $storageUri..."
 
