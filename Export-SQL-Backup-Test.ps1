@@ -8,9 +8,9 @@ $storageResourceGroup = "Decommissioned-RG"
 $storageKey = (Get-AzStorageAccountKey -ResourceGroupName $storageResourceGroup -Name $storageAccount)[0].Value
 $subFolder = "Test" # Subfolder in the blob storage
 # Switch to SQL server's subscription ---
-Set-AzContext -SubscriptionId "c3885f45-6172-4386-a8a3-8bcc83a96b8e"
-$sqlServerName = "superenvironment0live"
-$sqlResourceGroup = "superenvironment-live"
+Set-AzContext -SubscriptionId "06512459-9f85-4800-a92b-d333fa1b2ad2"
+$sqlServerName = "superenvironment0test-envs"
+$sqlResourceGroup = "superenvironment-test-envs"
 $sqlAdmin = "sql_administrator"
 $sqlPassword = Read-Host -AsSecureString "Enter SQL administrator password"
 
